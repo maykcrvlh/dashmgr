@@ -1,0 +1,165 @@
+DASHMGR v1 - gerenciador de dashboards: um link do Chrome em cada monitor
+Criado por mayk.cloud e luniobr.com
+====================================================================
+
+INSTALAR NO PC DEFINITIVO
+1. Neste PC (que tem Python): duplo clique em gerar_pacote.bat
+   -> cria dashmgr_instalador_v1.zip (instalador + sua configuracao atual).
+2. Copie o .zip para o PC dos monitores, extraia, abra a pasta dashmgr_instalador_v1
+   e de duplo clique em dashmgr_instalador_v1.exe (pede permissao de administrador).
+3. O instalador visual guia em 5 etapas:
+   Boas-vindas (detecta e atualiza instalacao do dashmgr ou do Telas NOC)
+   -> Senha do painel web (ou manter a atual) -> Opcoes (pasta, iniciar com o
+   Windows, atalho, firewall, porta) -> Instalando -> Concluido (endereco web).
+   O PC final NAO precisa de Python. O dashmgr aparece em Configuracoes >
+   Aplicativos instalados (desinstalar por la ou por C:\dashmgr\desinstalar.bat).
+4. No PC final, faca uma vez o "Login" de cada SISTEMA e confira as telas no mapa.
+5. Atualizar: gere o pacote de novo e rode o dashmgr_instalador_v1.exe; a configuracao
+   do PC final e mantida.
+
+LOGON AUTOMATICO (para o PC ligar e ja abrir as telas sem ninguem digitar senha)
+- O programa inicia quando o usuario entra no Windows. Num PC dedicado a painel,
+  configure o logon automatico: Win+R > netplwiz > desmarque "Os usuarios devem
+  digitar um nome de usuario e senha" (em Windows 11, se a opcao nao aparecer,
+  desative "Exigir entrada do Windows Hello" em Configuracoes > Contas > Opcoes
+  de entrada). Use uma conta local sem privilegios de administrador.
+- O Windows pode mostrar aviso do SmartScreen no .exe (nao assinado): clique em
+  "Mais informacoes" > "Executar assim mesmo".
+
+
+COMO USAR
+1. Execute: python dashmgr.py   (ou o dashmgr.exe gerado pelo gerar_pacote.bat)
+2. Clique em "Identificar telas" - cada monitor mostra seu numero por 4 s.
+3. Em cada cartao: Nome e URL. O numero grande (POSICAO) e fixo do link.
+   Para escolher a tela, ARRASTE a posicao ate a tela no "Mapa das telas"
+   (ou use a lista "Tela"). Se a tela ja tiver um link, os dois trocam.
+   Arrastar uma tela do mapa sobre outra troca os links entre elas.
+   O arraste ja salva sozinho.
+4. LOGIN COMPARTILHADO: todos os links usam o MESMO Chrome/perfil, entao basta
+   fazer login UMA vez em cada sistema e ele vale para todas as telas.
+   Clique em "Login" em qualquer link -> abre janela normal com 2 abas:
+   a) Configuracoes > Ao iniciar > "Continuar de onde parou" (1 vez so);
+   b) o sistema: faca o login (marque "manter conectado" se houver).
+   Feche essa janela pelo X e clique em "Recarregar telas".
+   O programa tambem guarda os cookies de sessao (criptografados pelo Windows)
+   a cada minuto e ao fechar, para o login sobreviver a reinicios do PC.
+   - "Login separado" (opcao no cartao): o link usa um perfil proprio, para
+     entrar com OUTRA conta no mesmo sistema. Esse faz login a parte.
+   - O login do seu Chrome normal NAO e compartilhado com o painel.
+5. Clique em "ABRIR TODOS".
+
+ALTERACOES COM AS TELAS ABERTAS (sem reiniciar as outras)
+- Trocar a posicao (arrastar no mapa ou mudar a lista "Tela"): so as telas
+  envolvidas mudam de monitor, sem recarregar a pagina. As demais nao sao tocadas.
+- Mudar a URL: so aquela tela navega para o novo endereco.
+- Desmarcar "Ativo": fecha so aquela tela. Marcar de novo ou criar link: abre so ela.
+- Mudar "Tela cheia" ou "Login separado": reabre so aquela tela.
+
+SESSOES DO PAINEL WEB
+- Botao "Sessoes" no topo do painel web: lista quem esta conectado (IP, navegador,
+  horario de entrada e ultima atividade).
+- "Derrubar" encerra uma sessao; "Derrubar todas as outras" so mantem a sua.
+  Quem foi derrubado volta para a tela de senha em poucos segundos.
+- No programa: Configuracoes > "Derrubar todas as sessoes web".
+- Trocar a senha tambem derruba todas as sessoes.
+
+ACESSO REMOTO A UMA TELA (sem RDP)
+- No painel web, cada cartao tem o botao "Acessar": abre a imagem AO VIVO daquela
+  tela no seu navegador e devolve clique, rolagem, teclado e colar (Ctrl+V).
+- So aquela tela e afetada; o PC e as outras telas continuam rodando.
+- E a mesma janela que esta na parede: o que voce fizer aparece na tela tambem.
+- Botoes: Teclado (celular), Recarregar pagina, Tela cheia, Fechar.
+- A sessao encerra sozinha 25 s depois que ninguem estiver olhando.
+- Cada acesso fica registrado na barra de status do programa (tela e IP).
+- A tela precisa estar aberta (ABRIR TODOS ou Abrir).
+
+AUTO REFRESH
+- No cartao: marque "Auto refresh a cada" e informe os segundos (minimo 5).
+  So aquela tela recarrega no intervalo; a contagem reinicia quando a tela abre.
+
+COMO FECHAR / SAIR DO KIOSK
+- Uma tela: botao "Fechar" na linha do link.
+- Atalho: Ctrl+Alt+Q com o mouse em cima da tela (o programa precisa estar aberto).
+- Ou clique na tela e aperte Alt+F4.
+- Todas: botao "Fechar paineis".
+
+OPCOES
+- Kiosk: desmarque para abrir aquela tela em janela normal maximizada.
+- "Abrir automaticamente ao iniciar o Windows": cria um atalho na pasta
+  Inicializar (abre 15 s apos o logon, sem mostrar a interface).
+- Linha de comando:  --auto (abre tudo e sai)   --fechar (fecha os paineis)
+
+ONDE FICAM OS DADOS
+- Configuracao: painel_config.json (mesma pasta do programa)
+- Perfis/logins do Chrome: %LOCALAPPDATA%\PainelMultiTelas\PainelMultiTelas_Perfis
+  (_compartilhado = login unico; _sessao.bin = cookies de sessao criptografados)
+  (caminho mantido do nome antigo para nao perder os logins ja feitos)
+- O programa so fecha Chromes desses perfis; o seu Chrome normal nao e afetado.
+
+DICAS
+- O vinculo posicao->tela usa o ID de hardware do monitor, entao continua certo
+  mesmo se o Windows renumerar as telas. Se trocar o monitor fisico ou mudar a
+  porta de video, use "Redetectar" e arraste a posicao de novo.
+- Se uma janela abrir na tela errada (escalas diferentes entre monitores),
+  o programa a move automaticamente para a tela correta.
+
+SE O LOGIN NAO FICAR SALVO
+- Refaca o passo 4 conferindo o "Continuar de onde parou".
+- Nao feche o Chrome pelo Gerenciador de Tarefas (perde os cookies recentes).
+- Alguns sistemas expiram a sessao no servidor (ex.: 8 h) ou exigem MFA a cada
+  acesso: nesses casos o login automatico depende da politica do proprio sistema.
+
+PAINEL WEB (ACESSO REMOTO)
+- Liga junto com o programa, no PC dos monitores. O endereco aparece no topo
+  da janela (clique para copiar). Ex.: http://192.168.0.50:888
+- Senha: definida no instalador. Para trocar depois: Configuracoes > Painel web,
+  ou rode C:\dashmgr\definir_senha.ps1 (clique direito > Executar com PowerShell)
+  e reabra o programa.
+  Ao trocar a senha, quem estava conectado e desconectado.
+- 5 senhas erradas seguidas bloqueiam aquele IP por 5 minutos. A sessao dura 8 h.
+- No navegador da para fazer tudo: arrastar posicoes, editar links, abrir/fechar
+  telas, recarregar, identificar. O botao Login abre a janela de login NO PC (alguem no local
+  precisa digitar).
+- Se duas pessoas editarem ao mesmo tempo, quem salvar depois recebe um aviso
+  para recarregar (ninguem sobrescreve o outro sem saber).
+- Firewall: o instalador ja libera a porta (redes Privada e Dominio). Na primeira
+  vez o Windows tambem pode perguntar - permita apenas em redes privadas.
+- Para continuar acessivel depois de reiniciar: marque "Abrir automaticamente ao
+  iniciar o Windows" (o programa fica minimizado servindo o painel web).
+- HTTPS (opcional): coloque cert.pem e key.pem na pasta do programa e reabra.
+- SEGURANCA: use na rede interna ou via VPN. NAO publique a porta 888 direto na
+  internet (sem HTTPS a senha trafega em texto puro na rede).
+
+PORTAS USADAS
+- 888/TCP: painel web (rede).
+- 9333/TCP: controle interno do Chrome compartilhado, so em 127.0.0.1 (nao abrir no
+  firewall). Se outra coisa usar essa porta, mude "cdp_porta" no painel_config.json.
+
+NOVIDADES DA VERSAO 1
+- Novo nome e logo: dashmgr (o instalador migra a instalacao do "Telas NOC").
+- Botao "Testar" agora se chama "Abrir".
+- "Sessoes" no painel web (e em Configuracoes no programa): ver quem esta
+  conectado e derrubar uma sessao ou todas as outras.
+- Login compartilhado entre as telas (opcao "Login separado" por link) e cookies
+  de sessao guardados para o login sobreviver a reinicios.
+- Trocar posicao, URL ou ativo aplica na hora, so nas telas envolvidas.
+- Auto refresh por link, com intervalo em segundos.
+- Botao "Acessar" no painel web: ver e usar uma tela especifica pelo navegador.
+- Botao "Recarregar telas".
+- Instalador pede a senha de acesso ao painel web.
+- Versao exibida no programa, no painel web e nas propriedades do .exe.
+
+COMO GERAR UMA NOVA VERSAO
+- Altere APP_VERSAO no topo do dashmgr.py e rode gerar_pacote.bat. O nome do
+  instalador usa o numero principal: 1.x.x -> dashmgr_instalador_v1, 2.x.x -> _v2.
+
+ARQUIVOS DO PROJETO (pasta PainelMultiTelas)
+- dashmgr.py ............ o programa
+- instalador.py ......... o instalador visual (dashmgr_instalador_v1.exe)
+- gerar_pacote.bat ...... gera o dashmgr_instalador_v1.zip
+- empacotar.py, preparar_versao.py ... usados pelo gerar_pacote.bat
+- dashmgr.ico ........... icone
+- desinstalar.bat, definir_senha.ps1 ... vao dentro do instalador
+- painel_config.json .... sua configuracao (links, posicoes, senha em hash)
+- _build ................ temporario do gerar_pacote.bat (pode apagar)
+- _legado ............... versoes e arquivos antigos (nao usados na v1)

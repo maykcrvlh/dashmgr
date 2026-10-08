@@ -1,0 +1,25 @@
+# Configuração local: contém as URLs dos seus sistemas e o hash da senha — nunca versionar
+painel_config.json
+senha_web.json
+*.tmp
+
+# Gerados pelo gerar_pacote.bat / PyInstaller
+_build/
+build/
+dist/
+*.spec
+dashmgr_instalador_v*.zip
+versao.txt
+version_info.txt
+
+# Certificados HTTPS do painel web
+cert.pem
+key.pem
+
+# Pastas locais que não vão para o repositório
+_legado/
+publicacao_github/
+
+# Python
+__pycache__/
+*.pyc
