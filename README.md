@@ -5,7 +5,6 @@
 <p align="center">
   <a href="LICENSE"><img alt="Licença GPL-3.0" src="https://img.shields.io/badge/licen%C3%A7a-GPL--3.0-392776"></a>
   <img alt="Windows 10/11" src="https://img.shields.io/badge/Windows-10%20%7C%2011-33BCD5">
-  <img alt="Python 3.10+" src="https://img.shields.io/badge/Python-3.10%2B-392776">
   <img alt="Versão v1" src="https://img.shields.io/badge/vers%C3%A3o-v1-33BCD5">
 </p>
 
