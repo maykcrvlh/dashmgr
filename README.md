@@ -1,0 +1,2 @@
+# dashmgr
+Remote dashboard manager
